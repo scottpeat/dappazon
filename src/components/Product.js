@@ -31,6 +31,17 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
         </div>
         <div className="product__order">
           <h1>{ethers.utils.formatUnits(item.cost.toString(), 'ether')} ETH</h1>
+          <p>
+            FREE delivery <br />
+            <strong>
+              {new Date(Date.now() + 345600000).toLocaleDateString(undefined, {
+                weekday: 'long',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </strong>
+          </p>
+          {item.stock > 0 ? <p>In Stock.</p> : <p>Out of Stock.</p>}
         </div>
       </div>
     </div>
