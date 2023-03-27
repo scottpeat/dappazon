@@ -24,8 +24,9 @@ function App() {
   const [item, setItem] = useState({});
   const [toggle, setToggle] = useState(false);
 
-  const togglePop = () => {
-    console.log('Toggle Pop');
+  const togglePop = (item) => {
+    setItem(item);
+    toggle ? setToggle(false) : setToggle(true);
   };
 
   const loadBlockchainData = async () => {
