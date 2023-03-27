@@ -14,13 +14,23 @@ import config from './config.json';
 
 function App() {
   const [account, setAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
+  const [dappazon, setDappazon] = useState(null);
 
   const loadBlockchainData = async () => {
-    const accounts = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    });
-    const account = ethers.utils.getAddress(accounts[0]);
-    setAccount(account);
+    // Connect to blockchain
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
+    const network = await provider.getNetwork();
+
+    // Connect to smart contracts
+    const dappazon = new ethers.Contract(
+      config[network.chainId].dappazon.address,
+      Dappazon,
+      provider
+    );
+    setDappazon(dappazon);
   };
 
   useEffect(() => {
@@ -30,6 +40,7 @@ function App() {
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
+      <h2>Dappazon Best Sellers</h2>
     </div>
   );
 }
